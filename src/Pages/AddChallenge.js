@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { TextField, Button, Container, Typography, Chip } from "@mui/material";
 import { userInformation } from "../Utils/userInformation";
 import { Link } from "react-router-dom";
+import { challengesInformation } from "../Utils/challengesInformation";
 
 const AddChallenge = () => {
   const userId = userInformation.getUserId();
@@ -14,14 +15,17 @@ const AddChallenge = () => {
     tag: "",
     tags: [],
     votes: [],
-    Date:""
+    Date: "",
   });
-  const [challenges, setChallenges] = useState([]);
 
   // If user id not found then navigate to home page
+  // If challenge existed for a particular ID then navigate to home page
   useEffect(() => {
-    if (!userId) navigate("/");
-  }, [userId]);
+    const userChallengeExists = challengesInformation.getChallengeById(userId);
+    if (!userId || userChallengeExists) {
+      navigate("/");
+    }
+  }, [userId, navigate]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -59,12 +63,11 @@ const AddChallenge = () => {
       description: formData.description,
       tags: formData.tags,
       votes: formData.votes,
-      Date:Date.now()
+      Date: Date.now(),
     };
 
     // push all the challenges with new challenge
     const updatedChallenges = [...existingChallenges, newChallenge];
-    setChallenges(updatedChallenges);
 
     localStorage.setItem("challenges", JSON.stringify(updatedChallenges));
 
@@ -76,8 +79,9 @@ const AddChallenge = () => {
       tag: "",
       tags: [],
       votes: [],
-      Date:""
+      Date: "",
     });
+    navigate("/");
   };
 
   return (

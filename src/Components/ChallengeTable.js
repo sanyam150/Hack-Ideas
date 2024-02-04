@@ -1,5 +1,5 @@
 // ChallengeTable.js
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Table,
   TableBody,
@@ -15,6 +15,25 @@ import {
   DialogActions,
   TextField,
 } from "@mui/material";
+
+import { challengesInformation } from "../Utils/challengesInformation";
+
+const VotesButton = ({ challenge, onLike, loggedInUser }) => {
+  const handleLike = () => {
+    onLike(challenge.id);
+  };
+
+  return (
+    <Button
+      variant="contained"
+      color="primary"
+      onClick={handleLike}
+      disabled={challenge.votes.includes(loggedInUser)}
+    >
+      Like
+    </Button>
+  );
+};
 
 const EditableRow = ({ challenge, onUpdate }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -48,6 +67,10 @@ const EditableRow = ({ challenge, onUpdate }) => {
         <TableCell>{editedChallenge.title}</TableCell>
         <TableCell>{editedChallenge.description}</TableCell>
         <TableCell>{editedChallenge.tags.join(", ")}</TableCell>
+        <TableCell>
+          {challengesInformation.getStandardTime(editedChallenge.Date)}
+        </TableCell>
+        <TableCell>{editedChallenge.votes.length}</TableCell>
         <TableCell>
           <Button variant="contained" color="primary" onClick={handleOpenModal}>
             Edit
@@ -90,6 +113,48 @@ const EditableRow = ({ challenge, onUpdate }) => {
 };
 
 const ChallengeTable = ({ challenges, loggedInUser, onUpdateChallenge }) => {
+  const [updatedChallenge, setUpdateChallenge] = useState(challenges);
+  const [dateAscendingOrder, setDateAscendingOrder] = useState(true);
+  const [isVotesMax, setIsVotesMax] = useState(true);
+
+  useEffect(() => {
+    setUpdateChallenge(challenges);
+  }, [challenges]);
+
+  const handleSortByDate = () => {
+    const sortedChallenges = challengesInformation.sortingChallenge(
+      challenges,
+      "Date",
+      dateAscendingOrder
+    );
+    setUpdateChallenge(sortedChallenges);
+    setDateAscendingOrder(!dateAscendingOrder);
+  };
+
+  const handleSortByLikes = () => {
+    const sortedChallenges = challengesInformation.sortingChallenge(
+      challenges,
+      "votes",
+      isVotesMax
+    );
+    setUpdateChallenge(sortedChallenges);
+    setIsVotesMax(!isVotesMax);
+  };
+
+  const handleLike = (challengeId) => {
+    const updatedChallenges = updatedChallenge.map((challenge) => {
+      if (challenge.id === challengeId) {
+        // Check if the user hasn't already liked the challenge
+        if (!challenge.votes.includes(loggedInUser)) {
+          challenge.votes.push(loggedInUser);
+        }
+      }
+      return challenge;
+    });
+    localStorage.setItem("challenges", JSON.stringify(updatedChallenges));
+    setUpdateChallenge(updatedChallenges);
+  };
+
   return (
     <TableContainer component={Paper}>
       <Table>
@@ -99,13 +164,40 @@ const ChallengeTable = ({ challenges, loggedInUser, onUpdateChallenge }) => {
             <TableCell>Title</TableCell>
             <TableCell>Description</TableCell>
             <TableCell>Tags</TableCell>
-
+            <TableCell>
+              <div style={{ display: "flex", alignItems: "center" }}>
+                Date
+                <Button
+                  variant="text"
+                  color="primary"
+                  onClick={handleSortByDate}
+                >
+                  {dateAscendingOrder ? (
+                    <span>&#9650;</span>
+                  ) : (
+                    <span>&#9660;</span>
+                  )}
+                </Button>
+              </div>
+            </TableCell>
+            <TableCell>
+              <div style={{ display: "flex", alignItems: "center" }}>
+                Votes
+                <Button
+                  variant="text"
+                  color="primary"
+                  onClick={handleSortByLikes}
+                >
+                  {isVotesMax ? <span>&#9650;</span> : <span>&#9660;</span>}
+                </Button>
+              </div>
+            </TableCell>
             <TableCell>Actions</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {challenges.map((challenge) => (
-            <React.Fragment key={challenge.id}>
+          {updatedChallenge.map((challenge, index) => (
+            <React.Fragment key={index}>
               {challenge.id === loggedInUser ? (
                 <EditableRow
                   challenge={challenge}
@@ -117,7 +209,22 @@ const ChallengeTable = ({ challenges, loggedInUser, onUpdateChallenge }) => {
                   <TableCell>{challenge.title}</TableCell>
                   <TableCell>{challenge.description}</TableCell>
                   <TableCell>{challenge.tags.join(", ")}</TableCell>
+                  <TableCell>
+                    {challengesInformation.getStandardTime(challenge.Date)}
+                  </TableCell>
+                  <TableCell>{challenge.votes.length}</TableCell>
                   <TableCell>Read Only</TableCell>
+                </TableRow>
+              )}
+              {loggedInUser && (
+                <TableRow>
+                  <TableCell>
+                    <VotesButton
+                      challenge={challenge}
+                      onLike={handleLike}
+                      loggedInUser={loggedInUser}
+                    />
+                  </TableCell>
                 </TableRow>
               )}
             </React.Fragment>

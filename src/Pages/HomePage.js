@@ -9,6 +9,7 @@ import ChallengeTable from "../Components/ChallengeTable";
 const HomePage = () => {
   const [loggedInUser, setLoggedInUser] = useState(null);
   const [challenges, setChallenges] = useState([]);
+  const [isChallengeExisted, setIsChallengeExisted] = useState(false);
 
   const userId = userInformation.getUserId();
 
@@ -24,12 +25,15 @@ const HomePage = () => {
       challenge.id === updatedChallenge.id ? updatedChallenge : challenge
     );
     setChallenges(updatedChallenges);
+    localStorage.setItem("challenges", JSON.stringify(updatedChallenges));
   };
 
   useEffect(() => {
     if (userId) {
       setLoggedInUser(userId);
     }
+    if (challengesInformation.getChallengeById(userId))
+      setIsChallengeExisted(true);
     const challenges = challengesInformation.getAllChalleneges();
     if (challenges) setChallenges(challenges);
   }, [userId]);
@@ -45,9 +49,15 @@ const HomePage = () => {
       ) : (
         <div>
           <h2>Welcome, {loggedInUser}!</h2>
-          <Button variant="contained" color="primary" fullWidth>
-            <Link to="/AddChallenge">AddChallenge</Link>
-          </Button>
+          {isChallengeExisted ? (
+            <Button variant="contained" color="primary" fullWidth>
+              <Link to="/">ChallengeExisted</Link>
+            </Button>
+          ) : (
+            <Button variant="contained" color="primary" fullWidth>
+              <Link to="/AddChallenge">AddChallenge</Link>
+            </Button>
+          )}
           <Button
             variant="contained"
             color="primary"
