@@ -1,6 +1,7 @@
 export const challengesInformation = {
   getAllChalleneges: function () {
-    return JSON.parse(localStorage.getItem("challenges")) || [];
+    if (localStorage.getItem("challenges"))
+      return JSON.parse(localStorage.getItem("challenges")) || [];
   },
   getChallengeById: function (id) {
     let isChallengeFound = false;

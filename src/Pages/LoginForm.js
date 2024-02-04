@@ -53,6 +53,7 @@ const LoginForm = () => {
             color="primary"
             fullWidth
             onClick={handleLogin}
+            data-testid="login-button"
           >
             Login
           </Button>

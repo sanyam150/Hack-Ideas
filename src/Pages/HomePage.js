@@ -43,17 +43,13 @@ const HomePage = () => {
       {!loggedInUser ? (
         <div>
           <Button variant="contained" color="primary" fullWidth>
-            <Link to="/LoginPage">Login</Link>
+            <Link to="/LoginForm">Login</Link>
           </Button>
         </div>
       ) : (
         <div>
           <h2>Welcome, {loggedInUser}!</h2>
-          {isChallengeExisted ? (
-            <Button variant="contained" color="primary" fullWidth>
-              <Link to="/">ChallengeExisted</Link>
-            </Button>
-          ) : (
+          {!isChallengeExisted && (
             <Button variant="contained" color="primary" fullWidth>
               <Link to="/AddChallenge">AddChallenge</Link>
             </Button>
@@ -64,7 +60,9 @@ const HomePage = () => {
             fullWidth
             style={{ marginTop: "20px" }}
           >
-            <Link onClick={handleLogOut}>LogOut</Link>
+            <Link onClick={handleLogOut} data-testid="logout-button">
+              LogOut
+            </Link>
           </Button>
         </div>
       )}

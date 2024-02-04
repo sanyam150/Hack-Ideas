@@ -55,6 +55,7 @@ const SignupForm = () => {
           color="primary"
           fullWidth
           onClick={handleSignup}
+          data-testid="SignUp-button"
         >
           Signup
         </Button>
