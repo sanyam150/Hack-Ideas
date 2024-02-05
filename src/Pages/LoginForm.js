@@ -34,9 +34,16 @@ const LoginForm = () => {
 
   return (
     <>
-      <Container maxWidth="xs">
+      <Container
+        maxWidth="xs"
+        style={{
+          backgroundColor: "antiquewhite",
+          padding: "40px",
+          borderRadius: "8px",
+        }}
+      >
         <Typography variant="h4" align="center" gutterBottom>
-          Login
+          LOGIN
         </Typography>
         <form>
           <TextField
@@ -53,6 +60,7 @@ const LoginForm = () => {
             color="primary"
             fullWidth
             onClick={handleLogin}
+            style={{ marginTop: "40px", marginBottom: "40px" }}
             data-testid="login-button"
           >
             Login

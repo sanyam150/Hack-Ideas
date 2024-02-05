@@ -158,7 +158,7 @@ const ChallengeTable = ({ challenges, loggedInUser, onUpdateChallenge }) => {
   return (
     <TableContainer component={Paper}>
       <Table>
-        <TableHead>
+        <TableHead style={{ backgroundColor: "antiquewhite" }}>
           <TableRow>
             <TableCell>ID</TableCell>
             <TableCell>Title</TableCell>
@@ -181,7 +181,12 @@ const ChallengeTable = ({ challenges, loggedInUser, onUpdateChallenge }) => {
               </div>
             </TableCell>
             <TableCell>
-              <div style={{ display: "flex", alignItems: "center" }}>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
                 Votes
                 <Button
                   variant="text"
@@ -218,7 +223,7 @@ const ChallengeTable = ({ challenges, loggedInUser, onUpdateChallenge }) => {
               )}
               {loggedInUser && (
                 <TableRow>
-                  <TableCell>
+                  <TableCell style={{ border: "none" }}>
                     <VotesButton
                       challenge={challenge}
                       onLike={handleLike}

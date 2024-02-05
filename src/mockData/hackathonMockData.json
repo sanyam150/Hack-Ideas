@@ -1,0 +1,30 @@
+{
+  "hackathonIntroduction": {
+    "title": "Hackathon 2024!",
+    "subtitle": "Empowering Innovators, Igniting Creativity",
+    "description": "Ready to push the boundaries of technology and showcase your skills? Hackathon is the ultimate platform for passionate individuals and teams to come together, collaborate, and turn innovative ideas into reality.",
+    "whatIsHackathon": {
+      "title": "What is Hackathon?",
+      "description": "Hackathon is not just an event; it's an experience that celebrates creativity, problem-solving, and the spirit of collaboration. Whether you're a seasoned developer, a design enthusiast, or someone with a big idea, this is your chance to make an impact."
+    },
+    "whyParticipate": {
+      "title": "Why Participate?",
+      "points": [
+        "Innovate: Challenge yourself with real-world problems and find innovative solutions.",
+        "Learn: Gain new skills, explore cutting-edge technologies, and learn from industry experts.",
+        "Network: Connect with like-minded individuals, mentors, and potential collaborators.",
+        "Showcase: Demonstrate your talents and projects to a global audience.",
+        "Win Prizes: Compete for exciting prizes and recognition from industry leaders."
+      ]
+    },
+    "whatToExpect": {
+      "title": "What to Expect?",
+      "points": [
+        "Ongoing Hackathons: Engage in ongoing hackathons with diverse themes and challenges.",
+        "Workshops and Webinars: Attend workshops and webinars by industry professionals.",
+        "Featured Projects: Explore outstanding projects and get inspired by the community's creativity.",
+        "Collaboration: Connect with fellow participants, form teams, and collaborate on exciting projects."
+      ]
+    }
+  }
+}

@@ -85,7 +85,14 @@ const AddChallenge = () => {
   };
 
   return (
-    <Container maxWidth="md">
+    <Container
+      maxWidth="md"
+      style={{
+        backgroundColor: "antiquewhite",
+        padding: "40px",
+        borderRadius: "8px",
+      }}
+    >
       <Typography variant="h4" align="center" gutterBottom>
         Challenge Form
       </Typography>
@@ -148,7 +155,9 @@ const AddChallenge = () => {
           color="primary"
           style={{ marginTop: "20px", marginLeft: "20px" }}
         >
-          <Link to="/">Home Page</Link>
+          <Link to="/" style={{ textDecoration: "none", color: "white" }}>
+            Home Page
+          </Link>
         </Button>
       </form>
     </Container>

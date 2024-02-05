@@ -36,7 +36,14 @@ const SignupForm = () => {
   });
 
   return (
-    <Container maxWidth="xs">
+    <Container
+      maxWidth="xs"
+      style={{
+        backgroundColor: "antiquewhite",
+        padding: "40px",
+        borderRadius: "8px",
+      }}
+    >
       <Typography variant="h4" align="center" gutterBottom>
         Signup
       </Typography>
@@ -56,6 +63,7 @@ const SignupForm = () => {
           fullWidth
           onClick={handleSignup}
           data-testid="SignUp-button"
+          style={{ marginTop: "40px", marginBottom: "40px" }}
         >
           Signup
         </Button>
