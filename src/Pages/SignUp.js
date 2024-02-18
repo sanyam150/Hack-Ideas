@@ -1,8 +1,7 @@
 // SignupForm.js
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { TextField, Button, Container, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { userInformation } from "../Utils/userInformation";
 
 const SignupForm = () => {
   const navigate = useNavigate();
@@ -27,13 +26,6 @@ const SignupForm = () => {
     sessionStorage.setItem("isLoggedIn", newEmployeeId);
     navigate("/");
   };
-
-  // If user is already logged in then redirect to home page
-  useEffect(() => {
-    if (userInformation.isUserLoggedIn()) {
-      navigate("/");
-    }
-  });
 
   return (
     <Container

@@ -6,15 +6,37 @@ import ErrorPage from "../Pages/ErrorPage";
 import LoginForm from "../Pages/LoginForm";
 import Signup from "../Pages/SignUp";
 import AddChallenge from "../Pages/AddChallenge";
+import ProtectedRoutes from "../Utils/ProtectedRoutes";
 const AppRouter = () => {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="*" element={<ErrorPage />} />
-        <Route path="/LoginForm" element={<LoginForm />} />
-        <Route path="/Signup" element={<Signup />} />
-        <Route path="/AddChallenge" element={<AddChallenge />} />
+        <Route
+          path="/LoginForm"
+          element={
+            <ProtectedRoutes redirectPath="/" isChallengeForm={false}>
+              <LoginForm />
+            </ProtectedRoutes>
+          }
+        />
+        <Route
+          path="/SignUp"
+          element={
+            <ProtectedRoutes redirectPath="/" isChallengeForm={false}>
+              <Signup />
+            </ProtectedRoutes>
+          }
+        />
+        <Route
+          path="/AddChallenge"
+          element={
+            <ProtectedRoutes redirectPath="/" isChallengeForm={true}>
+              <AddChallenge />
+            </ProtectedRoutes>
+          }
+        />
       </Routes>
     </Router>
   );

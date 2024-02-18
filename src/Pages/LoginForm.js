@@ -1,9 +1,8 @@
 // LoginForm.js
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { TextField, Button, Container, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { userInformation } from "../Utils/userInformation";
 
 const LoginForm = () => {
   const navigate = useNavigate();
@@ -24,13 +23,6 @@ const LoginForm = () => {
       alert("Invalid Employee ID");
     }
   };
-
-  // If user is already logged in then redirect to home page
-  useEffect(() => {
-    if (userInformation.isUserLoggedIn()) {
-      navigate("/");
-    }
-  });
 
   return (
     <>

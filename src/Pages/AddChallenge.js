@@ -1,13 +1,11 @@
 // ChallengeForm.js
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { TextField, Button, Container, Typography, Chip } from "@mui/material";
 import { userInformation } from "../Utils/userInformation";
 import { Link } from "react-router-dom";
-import { challengesInformation } from "../Utils/challengesInformation";
 
 const AddChallenge = () => {
-  const userId = userInformation.getUserId();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     title: "",
@@ -17,15 +15,6 @@ const AddChallenge = () => {
     votes: [],
     Date: "",
   });
-
-  // If user id not found then navigate to home page
-  // If challenge existed for a particular ID then navigate to home page
-  useEffect(() => {
-    const userChallengeExists = challengesInformation.getChallengeById(userId);
-    if (!userId || userChallengeExists) {
-      navigate("/");
-    }
-  }, [userId, navigate]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -64,6 +53,7 @@ const AddChallenge = () => {
       tags: formData.tags,
       votes: formData.votes,
       Date: Date.now(),
+      challengeId: existingChallenges.length + 1,
     };
 
     // push all the challenges with new challenge
@@ -80,6 +70,7 @@ const AddChallenge = () => {
       tags: [],
       votes: [],
       Date: "",
+      challengeId: "",
     });
     navigate("/");
   };

@@ -18,9 +18,9 @@ import {
 
 import { challengesInformation } from "../Utils/challengesInformation";
 
-const VotesButton = ({ challenge, onLike, loggedInUser }) => {
+const VotesButton = ({ challenge, onLike, loggedInUser, challengeId }) => {
   const handleLike = () => {
-    onLike(challenge.id);
+    onLike(challengeId);
   };
 
   return (
@@ -36,12 +36,13 @@ const VotesButton = ({ challenge, onLike, loggedInUser }) => {
 };
 
 const EditableRow = ({ challenge, onUpdate }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
   const [editedChallenge, setEditedChallenge] = useState(challenge);
+  const [modalChallenge, setModalChallenge] = useState({ ...challenge });
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setEditedChallenge((prevChallenge) => ({
+    setModalChallenge((prevChallenge) => ({
       ...prevChallenge,
       [name]: value,
     }));
@@ -56,7 +57,8 @@ const EditableRow = ({ challenge, onUpdate }) => {
   };
 
   const handleUpdate = () => {
-    onUpdate(editedChallenge);
+    onUpdate(modalChallenge);
+    setEditedChallenge(modalChallenge);
     handleCloseModal();
   };
 
@@ -85,7 +87,7 @@ const EditableRow = ({ challenge, onUpdate }) => {
           <TextField
             label="Title"
             name="title"
-            value={editedChallenge.title}
+            value={modalChallenge.title}
             onChange={handleInputChange}
             fullWidth
             margin="normal"
@@ -93,7 +95,7 @@ const EditableRow = ({ challenge, onUpdate }) => {
           <TextField
             label="Description"
             name="description"
-            value={editedChallenge.description}
+            value={modalChallenge.description}
             onChange={handleInputChange}
             multiline
             rows={4}
@@ -143,7 +145,7 @@ const ChallengeTable = ({ challenges, loggedInUser, onUpdateChallenge }) => {
 
   const handleLike = (challengeId) => {
     const updatedChallenges = updatedChallenge.map((challenge) => {
-      if (challenge.id === challengeId) {
+      if (challenge.challengeId === challengeId) {
         // Check if the user hasn't already liked the challenge
         if (!challenge.votes.includes(loggedInUser)) {
           challenge.votes.push(loggedInUser);
@@ -228,6 +230,7 @@ const ChallengeTable = ({ challenges, loggedInUser, onUpdateChallenge }) => {
                       challenge={challenge}
                       onLike={handleLike}
                       loggedInUser={loggedInUser}
+                      challengeId={challenge.challengeId}
                     />
                   </TableCell>
                 </TableRow>

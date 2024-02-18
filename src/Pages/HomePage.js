@@ -12,7 +12,6 @@ import { Typography, Paper } from "@mui/material";
 const HomePage = () => {
   const [loggedInUser, setLoggedInUser] = useState(null);
   const [challenges, setChallenges] = useState([]);
-  const [isChallengeExisted, setIsChallengeExisted] = useState(false);
 
   const userId = userInformation.getUserId();
 
@@ -25,7 +24,9 @@ const HomePage = () => {
 
   const onUpdateChallenge = (updatedChallenge) => {
     const updatedChallenges = challenges.map((challenge) =>
-      challenge.id === updatedChallenge.id ? updatedChallenge : challenge
+      challenge.challengeId === updatedChallenge.challengeId
+        ? updatedChallenge
+        : challenge
     );
     setChallenges(updatedChallenges);
     localStorage.setItem("challenges", JSON.stringify(updatedChallenges));
@@ -35,8 +36,6 @@ const HomePage = () => {
     if (userId) {
       setLoggedInUser(userId);
     }
-    if (challengesInformation.getChallengeById(userId))
-      setIsChallengeExisted(true);
     const challenges = challengesInformation.getAllChalleneges();
     if (challenges) setChallenges(challenges);
   }, [userId]);
@@ -69,24 +68,23 @@ const HomePage = () => {
         ) : (
           <div>
             <h2>Welcome, {loggedInUser}!</h2>
-            {!isChallengeExisted && (
-              <Button
-                variant="contained"
-                color="primary"
-                style={{
-                  textAlign: "center",
-                  marginBottom: "10px",
-                  marginRight: "5px",
-                }}
+            <Button
+              variant="contained"
+              color="primary"
+              style={{
+                textAlign: "center",
+                marginBottom: "10px",
+                marginRight: "5px",
+              }}
+            >
+              <Link
+                to="/AddChallenge"
+                style={{ textDecoration: "none", color: "white" }}
               >
-                <Link
-                  to="/AddChallenge"
-                  style={{ textDecoration: "none", color: "white" }}
-                >
-                  Add Challenge
-                </Link>
-              </Button>
-            )}
+                Add Challenge
+              </Link>
+            </Button>
+
             <Button
               variant="contained"
               color="primary"
